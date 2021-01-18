@@ -1,9 +1,10 @@
-import React from 'react';
-import ContactForm from './components/ContactForm/ContactForm';
-import Filter from './components/Filter/Filter';
-import ContactList from './components/ContactList/ContactList';
+import React, { Component } from 'react';
+import ContactForm from './components/ContactForm';
+import Filter from './components/Filter';
+import ContactList from './components/ContactList';
 //import PropTypes from 'prop-types';
-class App extends React.Component {
+
+class App extends Component {
   static defaultProps = {
        
   }
@@ -17,26 +18,43 @@ class App extends React.Component {
     {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
     {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
   ],
-  filter: '',
-  name: '',
-  number: ''
-}
+  filter: ''
+  }
+  
+  formSubmitHandler = data => {
+    console.log(data);
+  };
+  
+  handleInputChange = e => {
+    this.setState({filter: e.currentTarget.value});
+  };
+
+  deleteContact = (contactId) => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }))
+  };
 
   render() {
-  return (
-    <div>
-     <h1>Phonebook</h1>
-     <ContactForm />
+    const { filter } = this.state;
+    const { handleInputChange } = this.state;
+    const { contacts } = this.state;
+    return (
+      <div>
+        <h1>Phonebook</h1>
+        <ContactForm onSubmit={this.formSubmitHandler} />
 
-     <h2>Contacts</h2>
-     <Filter />
-     <ContactList />
-    </div>
+        <h2>Contacts</h2>
+        <Filter
+          filter={filter}
+          onChange={handleInputChange} />
+        <ContactList
+          contacts={contacts}
+          onDeleteContact={this.deleteContact} />
+      </div>
     );
   }
 }
 
 export default App;
 
-//Если твое приложение реализовано в одном компоненте <App>, выполни рефакторинг, выделив подходящие части в отдельные компоненты. В состоянии корневого компонента <App> останутся только свойства contacts и filter.
-//Достаточно выделить четыре компонента: форма добавления контактов, список контактов, элемент списка контактов и фильтр поиска.

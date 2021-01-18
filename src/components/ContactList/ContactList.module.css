@@ -1,0 +1,20 @@
+.list {
+  color: blue;
+  border: 1px solid black;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.name {
+  margin-top: 5px;
+}
+
+.button {
+  border: blueviolet;
+  border-radius: 3px;
+  background-color: coral;
+}
