@@ -50,7 +50,7 @@ class ContactForm extends Component {
               id={this.numberInputId}
             /> 
         </label>
-        <button type="submit" className={s.button} onSubmit={this.addcontact}>Add contact</button>
+        <button type="submit" className={s.button} onSubmits={this.addcontact}>Add contact</button>
         </form>
         );
      }

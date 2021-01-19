@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-//import shortid from 'shortid';
+import shortid from 'shortid';
 import ContactForm from './components/ContactForm';
 import Filter from './components/Filter';
 import ContactList from './components/ContactList';
 //import PropTypes from 'prop-types';
 
 class App extends Component {
-  static defaultProps = {
-       
-  }
-  static propTypes = {
-        
-  }
+ 
   state = {
     contacts: [
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -32,7 +27,7 @@ class App extends Component {
     }))
   };
 
-  /*addcontact = text => {
+  addcontact = ({ name, number }) => {
     const contact = {
       id: shortid.generate(),
       name,
@@ -41,17 +36,18 @@ class App extends Component {
     this.setState(prevState => ({
       contacts: [contact, ...prevState.contacts],
     }));
-  };*/
+  };
+
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
   };
 
   render() {
     const { contacts, filter } = this.state;
-    //const normalizedFilter = this.state.filter.toLowerCase();
-    /*const visibleContacts = this.state.contacts.filter(contact =>
-      contact.text.toLowerCase().includes(normalizedFilter),
-    );*/
+    const normalizedFilter = this.state.filter.toLowerCase();
+    const visibleContacts = this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter),
+    );
 
       return(
       <>
