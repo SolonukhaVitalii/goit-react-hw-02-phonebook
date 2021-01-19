@@ -3,7 +3,6 @@ import shortid from 'shortid';
 import ContactForm from './components/ContactForm';
 import Filter from './components/Filter';
 import ContactList from './components/ContactList';
-//import PropTypes from 'prop-types';
 
 class App extends Component {
  
@@ -17,8 +16,29 @@ class App extends Component {
     filter: ''
   }
   
-  formSubmitHandler = data => {
-    console.log(data);
+  addContact = ({ name, number }) => {
+    const searchSameName = this.state.contacts
+      .map((cont) => cont.name)
+      .includes(name);
+
+    if (searchSameName) {
+      alert(`${name} is already in contacts`);
+    } else if (name.length === 0) {
+      alert("Fields must be filled!");
+    } else {
+      const contact = {
+        id: shortid.generate(),
+        name,
+        number
+      };
+      this.setState(prevState => ({
+        contacts: [contact, ...prevState.contacts],
+      }));
+    }
+  };
+  
+  changeFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
   };
   
   deleteContact = (contactId) => {
@@ -27,24 +47,9 @@ class App extends Component {
     }))
   };
 
-  addcontact = ({ name, number }) => {
-    const contact = {
-      id: shortid.generate(),
-      name,
-      number
-    };
-    this.setState(prevState => ({
-      contacts: [contact, ...prevState.contacts],
-    }));
-  };
-
-  changeFilter = e => {
-    this.setState({ filter: e.currentTarget.value });
-  };
-
   render() {
-    const { contacts, filter } = this.state;
-    const normalizedFilter = this.state.filter.toLowerCase();
+    const { filter } = this.state;
+    const normalizedFilter = filter.toLowerCase();
     const visibleContacts = this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter),
     );
@@ -53,8 +58,8 @@ class App extends Component {
       <>
         <h1>Phonebook</h1>
         <ContactForm
-          onSubmit={this.formSubmitHandler}
-          onSubmits={this.addcontact} />
+          onSubmit={this.addContact}
+        />
 
         <h2>Contacts</h2>
           <Filter
@@ -62,7 +67,7 @@ class App extends Component {
             onChange={this.changeFilter}
           />
         <ContactList
-          contacts={contacts}
+          contacts={visibleContacts}
           onDeleteContact={this.deleteContact} />
       </>
     );

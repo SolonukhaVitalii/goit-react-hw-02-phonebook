@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import s from './ContactForm.module.css';
 import shortid from 'shortid';
-//import PropTypes from 'prop-types';
 
 class ContactForm extends Component {
     
@@ -50,7 +49,7 @@ class ContactForm extends Component {
               id={this.numberInputId}
             /> 
         </label>
-        <button type="submit" className={s.button} onSubmits={this.addcontact}>Add contact</button>
+        <button type="submit" className={s.button}>Add contact</button>
         </form>
         );
      }
